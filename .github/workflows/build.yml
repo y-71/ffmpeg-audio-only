@@ -22,10 +22,11 @@ jobs:
         run: |
           wget https://ffmpeg.org/releases/ffmpeg-6.0.tar.gz
           tar -xzvf ffmpeg-6.0.tar.gz
-          cd ffmpeg-6.0 && pwd
+          cd ffmpeg-6.0 && pwd && ls
 
       - name: Configure FFmpeg for Audio-Only
         run: |
+          pwd && ls
           ./configure \
             --disable-everything \
             --enable-demuxer=wav,aac,flac,ogg \
