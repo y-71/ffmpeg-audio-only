@@ -22,7 +22,7 @@ jobs:
         run: |
           wget https://ffmpeg.org/releases/ffmpeg-6.0.tar.gz
           tar -xzvf ffmpeg-6.0.tar.gz
-          cd ffmpeg-6.0
+          cd ffmpeg-6.0 && pwd
 
       - name: Configure FFmpeg for Audio-Only
         run: |
