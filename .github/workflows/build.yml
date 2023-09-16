@@ -22,11 +22,10 @@ jobs:
         run: |
           wget https://ffmpeg.org/releases/ffmpeg-6.0.tar.gz
           tar -xzvf ffmpeg-6.0.tar.gz
-          cd ffmpeg-6.0 && pwd && ls
 
       - name: Configure FFmpeg for Audio-Only
         run: |
-          pwd && ls
+          cd ffmpeg-6.0
           ./configure \
             --disable-everything \
             --enable-demuxer=wav,aac,flac,ogg \
@@ -38,14 +37,18 @@ jobs:
             --enable-protocol=file
 
       - name: Build FFmpeg
-        run: make -j$(nproc)
+        run: |
+          cd ffmpeg-6.0
+          make -j$(nproc)
 
       - name: Install FFmpeg
-        run: sudo make install
+        run: |
+          cd ffmpeg-6.0
+          sudo make install
 
       - name: Verify FFmpeg
         run: ffmpeg -version
 
       - name: Run tests
         run: |
-          cd ./${{ github.workspace }}/test_build.sh
+          cd ./test_build.sh
