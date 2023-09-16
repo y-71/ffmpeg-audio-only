@@ -28,6 +28,7 @@ jobs:
           cd ffmpeg-6.0
           ./configure \
             --disable-all
+            --disable-x86asm 
             --disable-autodetect
             --disable-network
             --enable-pthreads
