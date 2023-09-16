@@ -28,6 +28,7 @@ jobs:
           cd ffmpeg-6.0
           ./configure \
             --disable-everything \
+            --disable-x86asm 
             --enable-demuxer=wav,aac,flac,ogg \
             --enable-decoder=aac,flac,opus,vorbis,mp3 \
             --enable-parser=aac,flac,opus,vorbis,mp3 \
