@@ -1,0 +1,66 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: ubuntu:latest
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update
+            apt-get install -y build-essential autoconf automake libtool pkg-config libasound2-dev libvorbis-dev libopus-dev libmp3lame-dev libflac-dev libsoxr-dev
+
+      - run:
+          name: Download FFmpeg source code
+          command: |
+            wget https://ffmpeg.org/releases/ffmpeg-6.0.tar.gz
+            tar -xzvf ffmpeg-6.0.tar.gz
+
+      - run:
+          name: Configure FFmpeg for Audio-Only
+          command: |
+            cd ffmpeg-6.0
+            ./configure \
+              --disable-all \
+              --disable-x86asm \
+              --disable-autodetect \
+              --disable-network \
+              --enable-pthreads \
+              --enable-avcodec \
+              --enable-avformat \
+              --enable-swresample \
+              --enable-avfilter \
+              --enable-libmp3lame \
+              --enable-parser=mpegaudio \
+              --enable-demuxer=mp3,wav \
+              --enable-muxer=mp3,wav \
+              --enable-decoder=pcm*,mp3* \
+              --enable-encoder=pcm*,libmp3lame \
+              --enable-filter=aresample \
+              --enable-protocol=file \
+              --enable-ffmpeg \
+              --enable-small
+
+      - run:
+          name: Build FFmpeg
+          command: |
+            cd ffmpeg-6.0
+            make -j$(nproc)
+
+      - run:
+          name: Install FFmpeg
+          command: |
+            cd ffmpeg-6.0
+            make install
+
+      - run:
+          name: Verify FFmpeg
+          command: ffmpeg -version
+
+      - run:
+          name: Run tests
+          command: |
+            ./test_build.sh
