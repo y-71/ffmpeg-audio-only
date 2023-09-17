@@ -1,12 +1,4 @@
 #!/bin/bash
-ARTIFACTS=artifacts
-FFMPEG_BIN=$ARTIFACTS/*/bin/ffmpeg
-
-if [ ! -d $ARTIFACTS ]; then
-    echo "Error: can't find the artifacts directory, consider running a build."
-fi
-
-#!/bin/bash
 
 # Input directory for audio files
 input_dir="testfiles"
@@ -22,7 +14,7 @@ for input_file in "$input_dir"/*; do
     if [ -f "$input_file" ]; then  # Check if it's a regular file
         output_file="${output_dir}/$(basename "${input_file%.*}").mp3"  # Generate the output filename
 
-        $FFMPEG_BIN -i "$input_file" -b:a 192K "$output_file"
+        ffmpeg -i "$input_file" -b:a 192K "$output_file"
 
         if [ $? -eq 0 ]; then
             echo "Conversion of $input_file succeeded."
