@@ -35,9 +35,9 @@ jobs:
               --enable-avfilter \
               --enable-libmp3lame \
               --enable-parser=mpegaudio \
-              --enable-demuxer=mp3,wav \
+              --enable-demuxer=mp3,wav, aiff, flac \
               --enable-muxer=mp3,wav \
-              --enable-decoder=pcm*,mp3* \
+              --enable-decoder=pcm*,mp3*,alac,flac \
               --enable-encoder=pcm*,libmp3lame \
               --enable-filter=aresample \
               --enable-protocol=file \

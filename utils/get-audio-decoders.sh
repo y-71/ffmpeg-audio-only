@@ -1,0 +1,1 @@
+ffmpeg -decoders | grep "^ A" | awk -F ' ' '{print $2}' | awk 'NR > 1' | tee audio-decoders
